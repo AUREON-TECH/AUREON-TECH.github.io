@@ -1,0 +1,40 @@
+name: Sync AUREON-LINK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-aureon-link.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout destination
+        uses: actions/checkout@v4
+
+      - name: Clone source AUREON-LINK
+        run: git clone --depth 1 https://github.com/raphaelbuenocaptacao-creator/AUREON-LINK.git /tmp/aureon-link
+
+      - name: Copy site files
+        run: |
+          rsync -a --delete \
+            --exclude '.git' \
+            --exclude '.github/workflows' \
+            /tmp/aureon-link/ ./
+
+      - name: Commit copied site
+        run: |
+          git config user.name "AUREON Sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Publish AUREON link site"
+            git push
+          fi
