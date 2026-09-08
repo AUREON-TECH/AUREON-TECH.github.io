@@ -4,38 +4,51 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#05070d">
-  <meta name="description" content="AUREON — apps, automações, micro SaaS e inteligência artificial.">
+  <meta name="description" content="AUREON — transforme ideias em aplicativos com IA.">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <title>AUREON | Links</title>
   <style>
-    :root{--bg:#05070d;--text:#f7f9fc;--muted:#91a0b5;--line:rgba(255,255,255,.10);--gold:#f3c860;--cyan:#22d3ee;--violet:#8b5cf6}
+    :root{--bg:#05070d;--text:#f7f9fc;--muted:#91a0b5;--line:rgba(255,255,255,.10);--gold:#f3c860;--green:#34d399;--violet:#8b5cf6}
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    body{min-height:100vh;color:var(--text);background:radial-gradient(circle at 18% -8%,rgba(139,92,246,.22),transparent 35%),radial-gradient(circle at 100% 2%,rgba(34,211,238,.13),transparent 30%),radial-gradient(circle at 50% 110%,rgba(243,200,96,.08),transparent 35%),var(--bg);display:flex;justify-content:center}
+    body{min-height:100vh;color:var(--text);background:radial-gradient(circle at 18% -8%,rgba(139,92,246,.22),transparent 35%),radial-gradient(circle at 100% 2%,rgba(34,211,238,.12),transparent 30%),radial-gradient(circle at 50% 110%,rgba(243,200,96,.08),transparent 35%),var(--bg);display:flex;justify-content:center}
     body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,black,transparent 80%)}
     a{color:inherit;text-decoration:none}
-    .wrap{width:min(620px,100%);padding:44px 18px 56px;position:relative;z-index:1}
-    .profile{text-align:center;margin-bottom:28px}
-    .logo{width:92px;height:92px;margin:0 auto 18px;border-radius:30px;display:grid;place-items:center;font-size:46px;font-weight:950;color:#111827;background:linear-gradient(145deg,#f6d574,#f2be46);box-shadow:0 22px 70px rgba(243,200,96,.16),inset 0 1px 0 rgba(255,255,255,.75);position:relative}
-    .logo:after{content:"";position:absolute;inset:-7px;border:1px solid rgba(243,200,96,.18);border-radius:36px}
+    .wrap{width:min(620px,100%);padding:40px 18px 56px;position:relative;z-index:1}
+    .profile{text-align:center;margin-bottom:26px}
+    .logo{width:88px;height:88px;margin:0 auto 17px;border-radius:29px;display:grid;place-items:center;font-size:44px;font-weight:950;color:#111827;background:linear-gradient(145deg,#f6d574,#f2be46);box-shadow:0 22px 70px rgba(243,200,96,.16),inset 0 1px 0 rgba(255,255,255,.75);position:relative}
+    .logo:after{content:"";position:absolute;inset:-7px;border:1px solid rgba(243,200,96,.18);border-radius:35px}
     .brand{font-size:34px;font-weight:900;letter-spacing:-.04em;margin:0}
-    .handle{margin-top:6px;font-size:13px;color:#b9c3d2;letter-spacing:.08em}
-    .bio{max-width:500px;margin:14px auto 0;font-size:15px;line-height:1.6;color:var(--muted)}
+    .handle{margin-top:5px;font-size:12px;color:#b9c3d2;letter-spacing:.09em}
+    .bio{max-width:500px;margin:13px auto 0;font-size:15px;line-height:1.6;color:var(--muted)}
     .bio strong{color:#eef2f7}
-    .links{display:grid;gap:12px;margin-top:30px}
-    .link{min-height:68px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025));display:flex;align-items:center;padding:14px 16px;gap:14px;transition:.2s ease;box-shadow:0 12px 35px rgba(0,0,0,.15)}
+    .links{display:grid;gap:12px;margin-top:28px}
+    .link{min-height:70px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025));display:flex;align-items:center;padding:14px 16px;gap:14px;transition:.2s ease;box-shadow:0 12px 35px rgba(0,0,0,.15)}
     .link:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.22);background:linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.035))}
-    .icon{width:42px;height:42px;flex:0 0 42px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08)}
+    .link.primary{color:#111827;border-color:transparent;background:linear-gradient(135deg,#f6d574,#efbd49);box-shadow:0 18px 46px rgba(243,200,96,.13)}
+    .link.primary .icon{background:rgba(17,24,39,.09);border-color:rgba(17,24,39,.09)}
+    .link.primary .copy small{color:rgba(17,24,39,.68)}
+    .icon{width:42px;height:42px;flex:0 0 42px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);font-weight:900}
     .icon svg{width:21px;height:21px}
     .copy{flex:1;min-width:0}.copy b{display:block;font-size:15px}.copy small{display:block;margin-top:4px;font-size:12px;color:#8e9aaf}
     .arrow{font-size:22px;opacity:.58}
-    .social-row{display:flex;justify-content:center;gap:12px;margin-top:26px}
-    .social-row a{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;border:1px solid var(--line);background:rgba(255,255,255,.04);transition:.2s ease}
+    .method{margin-top:18px;padding:18px;border:1px solid rgba(243,200,96,.22);border-radius:22px;background:linear-gradient(145deg,rgba(243,200,96,.08),rgba(255,255,255,.025));box-shadow:0 16px 45px rgba(0,0,0,.14)}
+    .badge{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:rgba(52,211,153,.10);border:1px solid rgba(52,211,153,.20);color:#9ef0cd;font-size:10px;font-weight:900;letter-spacing:.10em;text-transform:uppercase}
+    .badge i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+    .method h2{font-size:22px;line-height:1.15;margin:14px 0 8px;letter-spacing:-.025em}
+    .method p{margin:0;color:#9eabbc;font-size:13px;line-height:1.6}
+    .steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .step{padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.035);font-size:11px;color:#c3ccda}
+    .method-cta{display:flex;align-items:center;justify-content:space-between;margin-top:15px;padding:12px 13px;border-radius:15px;background:rgba(255,255,255,.055);border:1px solid var(--line);font-size:12px;font-weight:800}
+    .section-label{text-align:center;margin:30px 0 12px;font-size:10px;color:#69778c;text-transform:uppercase;letter-spacing:.15em;font-weight:800}
+    .social-row{display:flex;justify-content:center;gap:12px}
+    .social-row a{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;border:1px solid var(--line);background:rgba(255,255,255,.04);transition:.2s ease}
     .social-row a:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.22)}
     .social-row svg{width:20px;height:20px}
     footer{text-align:center;margin-top:34px;font-size:11px;line-height:1.7;color:#66748a}
     footer b{color:#aeb8c8;letter-spacing:.12em}
-    @media(max-width:520px){.wrap{padding-top:32px}.brand{font-size:30px}.bio{font-size:14px}.link{min-height:64px}}
+    @media(max-width:520px){.wrap{padding-top:30px}.brand{font-size:30px}.bio{font-size:14px}.link{min-height:66px}.method h2{font-size:20px}}
   </style>
 </head>
 <body>
@@ -44,31 +57,43 @@
       <div class="logo" aria-label="AUREON">A</div>
       <h1 class="brand">AUREON</h1>
       <div class="handle">@aureon.saas</div>
-      <p class="bio"><strong>Ideias que viram produtos.</strong><br>Apps, automações, micro SaaS e inteligência artificial.</p>
+      <p class="bio"><strong>Transformamos ideias em aplicativos.</strong><br>E mostramos como você pode começar usando inteligência artificial.</p>
     </section>
 
-    <section class="links" aria-label="Links da AUREON">
-      <a class="link" href="https://www.instagram.com/aureon_saas?stkn=MW1lamNxZjFiemN6YQ==" target="_blank" rel="noopener">
-        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg></span>
-        <span class="copy"><b>Instagram</b><small>Acompanhe a AUREON</small></span><span class="arrow">›</span>
+    <section class="links" aria-label="Principais acessos">
+      <a class="link primary" href="#metodo-gratis">
+        <span class="icon">⚡</span>
+        <span class="copy"><b>Método Grátis — Crie seu primeiro app</b><small>Descubra o caminho para tirar sua ideia do papel com IA</small></span>
+        <span class="arrow">›</span>
       </a>
 
-      <a class="link" href="https://www.tiktok.com/@aureon.saas?_r=1&_t=ZS-99Y37C8WCdo" target="_blank" rel="noopener">
-        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4v10.5a4.5 4.5 0 1 1-3.5-4.38"/><path d="M14 4c1 2.7 2.8 4.2 5 4.5"/></svg></span>
-        <span class="copy"><b>TikTok</b><small>Conteúdo rápido sobre criação e IA</small></span><span class="arrow">›</span>
+      <a class="link" href="https://www.instagram.com/aureon_saas?stkn=MW1lamNxZjFiemN6YQ==" target="_blank" rel="noopener">
+        <span class="icon">A</span>
+        <span class="copy"><b>Quero que a AUREON crie meu app</b><small>Fale com a gente pelo Instagram</small></span>
+        <span class="arrow">›</span>
       </a>
 
       <a class="link" href="https://youtube.com/@aureonsaas?si=hvq3IzBeXLlY6WPh" target="_blank" rel="noopener">
         <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="m10 9 5 3-5 3V9Z" fill="currentColor" stroke="none"/></svg></span>
-        <span class="copy"><b>YouTube</b><small>Vídeos e tutoriais da AUREON</small></span><span class="arrow">›</span>
-      </a>
-
-      <a class="link" href="https://www.facebook.com/share/1DBRHHRdrU/" target="_blank" rel="noopener">
-        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M13.5 20v-7h2.4l.35-2.7H13.5V8.6c0-.8.2-1.3 1.35-1.3h1.55V4.9c-.35-.05-1.2-.15-2.25-.15-2.2 0-3.7 1.35-3.7 3.8v1.75H8V13h2.45v7"/></svg></span>
-        <span class="copy"><b>Facebook</b><small>Novidades e conteúdos da AUREON</small></span><span class="arrow">›</span>
+        <span class="copy"><b>Aprenda com a AUREON no YouTube</b><small>Conteúdos práticos sobre apps, IA e criação digital</small></span>
+        <span class="arrow">›</span>
       </a>
     </section>
 
+    <section class="method" id="metodo-gratis">
+      <span class="badge"><i></i> Método grátis</span>
+      <h2>Crie seu primeiro app com IA</h2>
+      <p>Você não precisa começar sabendo programar. O método mostra a direção certa para transformar uma ideia em um primeiro produto digital — sem entregar tudo de uma vez.</p>
+      <div class="steps">
+        <span class="step">1. Ideia certa</span>
+        <span class="step">2. Estrutura</span>
+        <span class="step">3. Protótipo</span>
+        <span class="step">4. Publicação</span>
+      </div>
+      <a class="method-cta" href="https://youtube.com/@aureonsaas?si=hvq3IzBeXLlY6WPh" target="_blank" rel="noopener"><span>Começar pelos conteúdos grátis</span><span>↗</span></a>
+    </section>
+
+    <div class="section-label">Siga a AUREON</div>
     <div class="social-row" aria-label="Redes sociais">
       <a href="https://www.instagram.com/aureon_saas?stkn=MW1lamNxZjFiemN6YQ==" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg></a>
       <a href="https://www.tiktok.com/@aureon.saas?_r=1&_t=ZS-99Y37C8WCdo" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4v10.5a4.5 4.5 0 1 1-3.5-4.38"/><path d="M14 4c1 2.7 2.8 4.2 5 4.5"/></svg></a>
