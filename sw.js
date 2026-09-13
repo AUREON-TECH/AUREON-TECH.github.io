@@ -1,5 +1,5 @@
 const CACHE_PREFIX='aureon-link-';
-const CACHE_NAME=`${CACHE_PREFIX}v4-private-vary-range-safe-shell`;
+const CACHE_NAME=`${CACHE_PREFIX}v5-founder-home`;
 const SHELL=['./','./index.html','./manifest.webmanifest','./icon.svg','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png'];
 const PRIVATE_PATHS=/\/(api|auth|login|logout|session|token|account|profile|admin)(\/|$)/i;
 const SENSITIVE_QUERY=/(token|auth|session|password|senha|secret|key|code)/i;
