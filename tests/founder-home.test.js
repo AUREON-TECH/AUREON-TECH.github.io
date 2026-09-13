@@ -14,7 +14,10 @@ const requiredHtml = [
   'TikTok',
   'Facebook',
   'GitHub',
-  'viewport-fit=cover'
+  'viewport-fit=cover',
+  'premium-ui',
+  'founder-photo-live',
+  'visual-proof'
 ];
 
 for (const token of requiredHtml) {
