@@ -1,13 +1,13 @@
 {
   "id": "./",
-  "name": "AUREON LINK",
-  "short_name": "AUREON LINK",
-  "description": "Hub de acesso ao ecossistema AUREON.",
+  "name": "Raphael Bueno × AUREON",
+  "short_name": "AUREON",
+  "description": "Raphael Bueno, fundador da AUREON — apps, SaaS, IA, produtos digitais e bastidores de construção.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#070B16",
-  "theme_color": "#0B1020",
+  "background_color": "#060708",
+  "theme_color": "#060708",
   "lang": "pt-BR",
   "icons": [
     {"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
