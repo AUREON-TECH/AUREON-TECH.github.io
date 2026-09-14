@@ -16,13 +16,24 @@ const requiredHtml = [
   'GitHub',
   'viewport-fit=cover',
   'premium-ui',
-  'founder-photo-live',
-  'visual-proof'
+  'founder-mini',
+  'Construo produtos digitais, SaaS e soluções com IA, transformando ideias em projetos reais.'
 ];
 
 for (const token of requiredHtml) {
   if (!html.includes(token)) {
     throw new Error(`Missing required home token: ${token}`);
+  }
+}
+
+const forbiddenHtml = [
+  'founder-photo-live',
+  'raphael-founder.jpg'
+];
+
+for (const token of forbiddenHtml) {
+  if (html.includes(token)) {
+    throw new Error(`Founder portrait must be removed from home: ${token}`);
   }
 }
 
