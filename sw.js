@@ -1,5 +1,5 @@
 const CACHE_PREFIX='aureon-link-';
-const CACHE_NAME=`${CACHE_PREFIX}v7-founder-photo-valid`;
+const CACHE_NAME=`${CACHE_PREFIX}v6-founder-photo`;
 const SHELL=['./','./index.html','./manifest.webmanifest','./icon.svg','./assets/raphael-founder.jpg','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png'];
 const PRIVATE_PATHS=/\/(api|auth|login|logout|session|token|account|profile|admin)(\/|$)/i;
 const SENSITIVE_QUERY=/(token|auth|session|password|senha|secret|key|code)/i;
