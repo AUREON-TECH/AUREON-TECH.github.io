@@ -8,6 +8,7 @@ const requiredHtml = [
   'AUREON',
   'O que estou construindo',
   'Quero criar meu app',
+  'https://raphaelbuenocaptacao-creator.github.io/AUREON-I30/',
   'Quero aprender',
   'Instagram',
   'YouTube',
