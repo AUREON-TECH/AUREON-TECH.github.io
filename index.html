@@ -52,6 +52,6 @@ footer{border-top:1px solid var(--line);padding:28px 0 42px;color:#737983;font-s
 <footer><span>© 2026 Raphael Bueno · AUREON</span><span>Construindo produtos digitais em público.</span></footer>
 </div>
 <button class="install-app" id="installApp" hidden>Instalar app</button>
-<script>let deferredPrompt=null;const installButton=document.getElementById('installApp');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installButton.hidden=false});installButton.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installButton.hidden=true});if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}</script>
+<script>let deferredPrompt=null;const installButton=document.getElementById('installApp');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installButton.hidden=false});installButton.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installButton.hidden=true});if('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=v6-founder-photo',{updateViaCache: 'none'}).catch(()=>{}))}</script>
 </body>
 </html>
