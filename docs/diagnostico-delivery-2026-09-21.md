@@ -13,11 +13,11 @@
 - AUREON Start: R$ 599,99.
 - AUREON Pro: R$ 1.499,99.
 - AUREON Business: a partir de R$ 2.999,99.
-- AUREON SaaS: sob orçamento — faça sua oferta.
+- AUREON SaaS: sob orçamento.
 
 ## Evidências automatizadas
 
-- Suíte atual: 20 testes.
+- Suíte atual: 25 testes.
 - Motor com nove perguntas no caminho "quero que criem meu aplicativo".
 - Motor com nove perguntas no caminho "quero aprender a criar aplicativos".
 - Recomendações e preços alinhados às ofertas aprovadas.
