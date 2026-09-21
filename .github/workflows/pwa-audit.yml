@@ -54,5 +54,6 @@ jobs:
           if (!/const CACHE\s*=\s*["']aureon-diagnostico-v\d+["']/.test(sw)) throw new Error('service-worker cache is not versioned');
           if (!html.includes('viewport-fit=cover')) throw new Error('viewport-fit=cover missing');
           if (!html.includes('./manifest.webmanifest')) throw new Error('manifest link missing');
-          if (!app.includes('navigator.serviceWorker.register("./sw.js")')) throw new Error('service worker registration missing');
+          if (!/navigator\.serviceWorker\.register\(["']\.\/sw\.js(?:\?v=[^"']+)?["']/.test(app)) throw new Error('service worker registration missing');
+          if (!/updateViaCache:\s*["']none["']/.test(app)) throw new Error('service worker must bypass HTTP cache on update');
           NODE

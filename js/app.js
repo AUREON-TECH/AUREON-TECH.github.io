@@ -6,35 +6,79 @@ import { buildWhatsAppMessage, buildWhatsAppUrl, isPublishableNumber } from "./w
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll("[data-screen]")];
 let session = createSession(readUtm(location.search));
+let navIndex = 0;
 
-function show(id) {
+function snapshot(step = session.step) {
+  return {
+    aureonDiagnostic: true,
+    sessionId: session.id,
+    step,
+    questionIndex: session.questionIndex,
+    route: session.route,
+    navIndex,
+  };
+}
+
+function syncHistory(step, mode) {
+  if (!mode) return;
+  if (mode === "push") navIndex += 1;
+  const state = snapshot(step);
+  if (mode === "replace") history.replaceState(state, "", location.href);
+  else history.pushState(state, "", location.href);
+}
+
+function show(id, { historyMode = "push" } = {}) {
   screens.forEach((node) => { node.hidden = node.id !== id; });
   $("#progress-wrap").hidden = id !== "question-screen";
   $("#restart-button").hidden = id === "start-screen";
   session.step = id;
   saveSession(localStorage, session);
+  syncHistory(id, historyMode);
 }
 
-function fresh() { clearSession(localStorage); session = createSession(readUtm(location.search)); $("#resume-dialog").hidden = true; show("identity-screen"); }
-function esc(value) { return String(value).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c])); }
+function fresh() {
+  clearSession(localStorage);
+  session = createSession(readUtm(location.search));
+  navIndex = 0;
+  show("identity-screen", { historyMode: "replace" });
+}
 
-function renderQuestion() {
+function esc(value) {
+  return String(value).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+
+function hydrateIdentity() {
+  if (!session.identity) return;
+  const fields = ["name", "phone", "email", "city"];
+  fields.forEach((key) => {
+    const input = $("#" + key);
+    if (input && session.identity[key] != null) input.value = session.identity[key];
+  });
+  const consent = $("#consent");
+  if (consent) consent.checked = session.identity.consent === true;
+}
+
+function renderQuestion(options = {}) {
   const questions = getRouteQuestions(session.route);
-  if (session.questionIndex >= questions.length) return renderResult();
+  if (session.questionIndex >= questions.length) return renderResult(options);
   const q = questions[session.questionIndex];
   const progress = getProgress(session.questionIndex, questions.length);
-  $("#progress-value").value = progress; $("#progress-percent").textContent = `${progress}%`; $("#progress-copy").textContent = `${session.questionIndex + 1} de ${questions.length}`;
+  $("#progress-value").value = progress;
+  $("#progress-percent").textContent = `${progress}%`;
+  $("#progress-copy").textContent = `${session.questionIndex + 1} de ${questions.length}`;
   $("#conversation").innerHTML = `<article class="bubble"><span class="avatar">A</span><p>${q.prompt}</p></article>`;
   const saved = session.answers[q.id];
+
   if (q.type === "text") {
     $("#answer-form").innerHTML = `<label for="current-answer">Sua resposta</label><input id="current-answer" name="answer" value="${esc(saved || "")}"><p class="field-error" data-question-error></p><button class="primary-button">Continuar →</button>`;
   } else {
     const selected = Array.isArray(saved) ? saved : [saved];
     const type = q.type === "multi" ? "checkbox" : "radio";
-    const options = q.options.map((item) => `<label class="option-button"><input type="${type}" name="answer" value="${item.value}" ${selected.includes(item.value) ? "checked" : ""}> ${item.label}</label>`).join("");
-    $("#answer-form").innerHTML = `<fieldset><legend class="microcopy">${q.type === "multi" ? "Selecione uma ou mais opções" : "Selecione uma opção"}</legend><div class="options">${options}</div></fieldset><p class="field-error" data-question-error></p><button class="primary-button">Continuar →</button>`;
+    const optionsHtml = q.options.map((item) => `<label class="option-button"><input type="${type}" name="answer" value="${item.value}" ${selected.includes(item.value) ? "checked" : ""}> ${item.label}</label>`).join("");
+    $("#answer-form").innerHTML = `<fieldset><legend class="microcopy">${q.type === "multi" ? "Selecione uma ou mais opções" : "Selecione uma opção"}</legend><div class="options">${optionsHtml}</div></fieldset><p class="field-error" data-question-error></p><button class="primary-button">Continuar →</button>`;
   }
-  show("question-screen");
+
+  show("question-screen", options);
 }
 
 function answerValue(form, q) {
@@ -43,7 +87,7 @@ function answerValue(form, q) {
   return form.querySelector("input")?.value.trim() || "";
 }
 
-function renderResult() {
+function renderResult(options = {}) {
   const result = calculateRecommendation(session.route, session.answers);
   session.recommendation = result;
   $("#result-title").textContent = `${session.identity.name}, encontramos o melhor caminho para você.`;
@@ -51,6 +95,7 @@ function renderResult() {
   $("#result-product").textContent = result.title;
   $("#result-price").textContent = result.priceLabel;
   const button = $("#whatsapp-button");
+
   if (isPublishableNumber(SITE_CONFIG.whatsappNumber)) {
     button.disabled = false;
     button.textContent = result.cta;
@@ -59,43 +104,117 @@ function renderResult() {
     button.disabled = true;
     button.textContent = "WhatsApp da AUREON em configuração";
   }
-  show("result-screen");
+
+  show("result-screen", options);
+}
+
+function restoreCurrentStep({ historyMode = null } = {}) {
+  hydrateIdentity();
+  if (session.identity?.name) {
+    $("#route-greeting").textContent = `Obrigado, ${session.identity.name}. Qual resultado você busca agora?`;
+  }
+  if (session.step === "question-screen" && session.route) return renderQuestion({ historyMode });
+  if (session.step === "result-screen" && session.route) return renderResult({ historyMode });
+  const safeStep = ["start-screen", "identity-screen", "route-screen"].includes(session.step) ? session.step : "identity-screen";
+  show(safeStep, { historyMode });
+}
+
+function fallbackBackQuestion() {
+  if (session.questionIndex > 0) {
+    session.questionIndex -= 1;
+    renderQuestion({ historyMode: "replace" });
+  } else {
+    show("route-screen", { historyMode: "replace" });
+  }
 }
 
 $("[data-action='start']").addEventListener("click", () => show("identity-screen"));
-$("#identity-form").addEventListener("submit", (event) => {
-  event.preventDefault(); const data = new FormData(event.currentTarget);
-  const identity = { name:data.get("name"), phone:data.get("phone"), email:data.get("email"), city:data.get("city"), consent:data.get("consent") === "on" };
-  const validation = validateIdentity(identity);
-  document.querySelectorAll("[data-error]").forEach((node) => { node.textContent = validation.errors[node.dataset.error] || ""; });
-  if (!validation.valid) return $(`#${Object.keys(validation.errors)[0]}`)?.focus();
-  session.identity = identity; $("#route-greeting").textContent = `Obrigado, ${identity.name}. Qual resultado você busca agora?`; show("route-screen");
-});
-document.querySelectorAll("[data-route]").forEach((button) => button.addEventListener("click", () => { session.route = button.dataset.route; session.questionIndex = 0; session.answers = {}; renderQuestion(); }));
-$("#answer-form").addEventListener("submit", (event) => {
-  event.preventDefault(); const questions = getRouteQuestions(session.route); const q = questions[session.questionIndex]; const value = answerValue(event.currentTarget, q);
-  if (q.required && (!value || value.length === 0)) return event.currentTarget.querySelector("[data-question-error]").textContent = "Responda para continuar.";
-  session.answers[q.id] = value; session.questionIndex += 1; saveSession(localStorage, session); renderQuestion();
-});
-$("[data-action='back-question']").addEventListener("click", () => { if (session.questionIndex > 0) { session.questionIndex -= 1; renderQuestion(); } else show("route-screen"); });
-$("[data-action='back-identity']").addEventListener("click", () => show("identity-screen"));
-$("#restart-button").addEventListener("click", fresh);
-function restoreCurrentStep() {
-  $("#resume-dialog").hidden = true;
-  if (session.identity?.name) $("#route-greeting").textContent = `Obrigado, ${session.identity.name}. Qual resultado você busca agora?`;
-  if (session.step === "question-screen") return renderQuestion();
-  if (session.step === "result-screen") return renderResult();
-  show(session.step || "identity-screen");
-}
 
-$("[data-action='resume']").addEventListener("click", restoreCurrentStep);
-$("[data-action='discard']").addEventListener("click", fresh);
+$("#identity-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+  const identity = {
+    name: data.get("name"),
+    phone: data.get("phone"),
+    email: data.get("email"),
+    city: data.get("city"),
+    consent: data.get("consent") === "on",
+  };
+  const validation = validateIdentity(identity);
+  document.querySelectorAll("[data-error]").forEach((node) => {
+    node.textContent = validation.errors[node.dataset.error] || "";
+  });
+  if (!validation.valid) return $("#" + Object.keys(validation.errors)[0])?.focus();
+
+  session.identity = identity;
+  $("#route-greeting").textContent = `Obrigado, ${identity.name}. Qual resultado você busca agora?`;
+  show("route-screen");
+});
+
+document.querySelectorAll("[data-route]").forEach((button) => button.addEventListener("click", () => {
+  session.route = button.dataset.route;
+  session.questionIndex = 0;
+  session.answers = {};
+  renderQuestion();
+}));
+
+$("#answer-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const questions = getRouteQuestions(session.route);
+  const q = questions[session.questionIndex];
+  const value = answerValue(event.currentTarget, q);
+  if (q.required && (!value || value.length === 0)) {
+    event.currentTarget.querySelector("[data-question-error]").textContent = "Responda para continuar.";
+    return;
+  }
+  session.answers[q.id] = value;
+  session.questionIndex += 1;
+  saveSession(localStorage, session);
+  renderQuestion();
+});
+
+$("[data-action='back-question']").addEventListener("click", () => {
+  if (navIndex > 0) history.back();
+  else fallbackBackQuestion();
+});
+
+$("[data-action='back-identity']").addEventListener("click", () => {
+  if (navIndex > 0) history.back();
+  else show("identity-screen", { historyMode: "replace" });
+});
+
+$("#restart-button").addEventListener("click", fresh);
+
+window.addEventListener("popstate", (event) => {
+  const state = event.state;
+  if (!state?.aureonDiagnostic) return;
+
+  if (state.sessionId && state.sessionId !== session.id) {
+    navIndex = 0;
+    show("identity-screen", { historyMode: "replace" });
+    return;
+  }
+
+  navIndex = Number.isInteger(state.navIndex) ? state.navIndex : 0;
+  const stored = loadSession(localStorage);
+  if (stored) session = stored;
+  session.step = state.step || "identity-screen";
+  if (Number.isInteger(state.questionIndex)) session.questionIndex = state.questionIndex;
+  if (state.route) session.route = state.route;
+  saveSession(localStorage, session);
+  restoreCurrentStep();
+});
 
 const stored = loadSession(localStorage);
-
 if (stored?.step && stored.step !== "start-screen") {
   session = stored;
-  restoreCurrentStep();
+  navIndex = 0;
+  restoreCurrentStep({ historyMode: "replace" });
+} else {
+  session.step = "start-screen";
+  show("start-screen", { historyMode: "replace" });
 }
 
-if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js?v=20260921-4"));
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js?v=20260921-5", { updateViaCache: "none" }));
+}

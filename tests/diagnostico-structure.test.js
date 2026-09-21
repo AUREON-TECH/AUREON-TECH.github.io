@@ -48,13 +48,28 @@ test("PWA shell includes every diagnostic asset", async () => {
 
 test("saved result is rendered again when a session resumes", async () => {
   const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
-  assert.match(app, /if \(session\.step === "result-screen"\) return renderResult\(\)/);
+  assert.match(app, /session\.step === "result-screen"[\s\S]*renderResult/);
 });
 
-
-test("saved session resumes automatically without reopening the continue dialog", async () => {
+test("saved session resumes automatically without continue dialog", async () => {
   const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
-  assert.match(app, /if \(stored\?\.step && stored\.step !== "start-screen"\) \{[\s\S]*session = stored;[\s\S]*restoreCurrentStep\(\);[\s\S]*\}/);
-  assert.doesNotMatch(app, /resume-dialog"\)\.hidden = false/);
-  assert.doesNotMatch(app, /aureon\.diagnostic\.activeTab/);
+  const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  assert.match(app, /if \(stored\?\.step && stored\.step !== "start-screen"\)/);
+  assert.match(app, /restoreCurrentStep\(\{ historyMode: "replace" \}\)/);
+  assert.doesNotMatch(app, /resume-dialog/);
+  assert.doesNotMatch(html, /Continuar diagnóstico\?/i);
+});
+
+test("browser and mobile back navigation stays inside the diagnostic flow", async () => {
+  const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
+  assert.match(app, /history\.pushState/);
+  assert.match(app, /history\.replaceState/);
+  assert.match(app, /addEventListener\("popstate"/);
+  assert.match(app, /history\.back\(\)/);
+  assert.match(app, /aureonDiagnostic:\s*true/);
+});
+
+test("service worker update bypasses browser cache", async () => {
+  const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
+  assert.match(app, /updateViaCache:\s*"none"/);
 });
