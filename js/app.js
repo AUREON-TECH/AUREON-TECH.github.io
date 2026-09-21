@@ -205,26 +205,14 @@ window.addEventListener("popstate", (event) => {
   restoreCurrentStep();
 });
 
-const stored = loadSession(localStorage);
-if (stored?.step && stored.step !== "start-screen") {
-  session = stored;
-  navIndex = 0;
-  restoreCurrentStep({ historyMode: "replace" });
-} else {
-  session.step = "start-screen";
-  show("start-screen", { historyMode: "replace" });
-}
+clearSession(localStorage);
+session = createSession(readUtm(location.search));
+navIndex = 0;
+show("start-screen", { historyMode: "replace" });
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      const key = "aureon.sw.reload.20260921-6";
-      if (sessionStorage.getItem(key)) return;
-      sessionStorage.setItem(key, "1");
-      location.reload();
-    });
-
-    const registration = await navigator.serviceWorker.register("./sw.js?v=20260921-6", { updateViaCache: "none" });
+    const registration = await navigator.serviceWorker.register("./sw.js?v=20260921-7", { updateViaCache: "none" });
     await registration.update();
   });
 }

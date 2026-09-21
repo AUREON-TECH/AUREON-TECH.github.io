@@ -51,12 +51,11 @@ test("saved result is rendered again when a session resumes", async () => {
   assert.match(app, /session\.step === "result-screen"[\s\S]*renderResult/);
 });
 
-test("saved session resumes automatically without continue dialog", async () => {
+test("opening the site always stays on the landing screen", async () => {
   const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
-  assert.match(app, /if \(stored\?\.step && stored\.step !== "start-screen"\)/);
-  assert.match(app, /restoreCurrentStep\(\{ historyMode: "replace" \}\)/);
-  assert.doesNotMatch(app, /resume-dialog/);
+  assert.match(app, /clearSession\(localStorage\);[\s\S]*session = createSession\([\s\S]*show\("start-screen", \{ historyMode: "replace" \}\);/);
+  assert.doesNotMatch(app, /if \(stored\?\.step && stored\.step !== "start-screen"\)/);
   assert.doesNotMatch(html, /Continuar diagnóstico\?/i);
 });
 
@@ -72,4 +71,12 @@ test("browser and mobile back navigation stays inside the diagnostic flow", asyn
 test("service worker update bypasses browser cache", async () => {
   const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
   assert.match(app, /updateViaCache:\s*"none"/);
+});
+
+
+test("service worker updates never reload or redirect the page automatically", async () => {
+  const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
+  assert.doesNotMatch(app, /controllerchange/);
+  assert.doesNotMatch(app, /location\.reload\(/);
+  assert.doesNotMatch(app, /location\.replace\(/);
 });
