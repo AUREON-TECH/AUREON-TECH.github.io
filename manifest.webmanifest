@@ -1,17 +1,1 @@
-{
-  "id": "./",
-  "name": "Raphael Bueno × AUREON",
-  "short_name": "AUREON",
-  "description": "Raphael Bueno, fundador da AUREON — apps, SaaS, IA, produtos digitais e bastidores de construção.",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#060708",
-  "theme_color": "#060708",
-  "lang": "pt-BR",
-  "icons": [
-    {"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
-    {"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
-    {"src":"./icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
-  ]
-}
+{"name":"Diagnóstico AUREON","short_name":"AUREON","description":"Descubra se você precisa criar um aplicativo ou aprender a construir o seu.","id":"./","start_url":"./","scope":"./","display":"standalone","background_color":"#06142d","theme_color":"#06142d","lang":"pt-BR","icons":[{"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"./icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
