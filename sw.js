@@ -1,9 +1,9 @@
-const CACHE = "aureon-diagnostico-v5";
+const CACHE = "aureon-diagnostico-v6";
 const SHELL = [
-  "./", "./index.html", "./css/diagnostico.css?v=20260921-5", "./icon.svg",
+  "./", "./index.html", "./css/diagnostico.css?v=20260921-6", "./icon.svg",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png",
   "./js/site-config.js", "./js/questions.js", "./js/engine.js", "./js/state.js",
-  "./js/whatsapp.js", "./js/app.js?v=20260921-5", "./terms.html", "./privacy.html",
+  "./js/whatsapp.js", "./js/app.js?v=20260921-6", "./terms.html", "./privacy.html",
   "./manifest.webmanifest"
 ];
 
@@ -26,7 +26,7 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === "navigate") {
-    event.respondWith(fetch(request).then((response) => {
+    event.respondWith(fetch(request, { cache: "no-store" }).then((response) => {
       const copy = response.clone();
       caches.open(CACHE).then((cache) => cache.put("./index.html", copy));
       return response;
@@ -35,7 +35,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (["script", "style"].includes(request.destination)) {
-    event.respondWith(fetch(request).then((response) => {
+    event.respondWith(fetch(request, { cache: "no-store" }).then((response) => {
       if (response.ok) caches.open(CACHE).then((cache) => cache.put(request, response.clone()));
       return response;
     }).catch(() => caches.match(request)));

@@ -216,5 +216,15 @@ if (stored?.step && stored.step !== "start-screen") {
 }
 
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js?v=20260921-5", { updateViaCache: "none" }));
+  window.addEventListener("load", async () => {
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      const key = "aureon.sw.reload.20260921-6";
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, "1");
+      location.reload();
+    });
+
+    const registration = await navigator.serviceWorker.register("./sw.js?v=20260921-6", { updateViaCache: "none" });
+    await registration.update();
+  });
 }
