@@ -244,7 +244,19 @@ A fase é considerada pronta apenas quando:
 - o site anterior continuar recuperável pelo GitHub;
 - os testes obrigatórios tiverem evidências.
 
-## 16. Próxima fase — Kiwify
+## 16. Ofertas e preços aprovados
+
+| Oferta | Entrega | Valor |
+|---|---|---:|
+| Aprender a criar aplicativos | Produto digital de entrada | **R$ 59,99** |
+| AUREON Start | Primeiro aplicativo adaptado ao nicho | **R$ 599,99** |
+| AUREON Pro | Login, banco de dados e painel administrativo | **R$ 1.499,99** |
+| AUREON Business | Sistema personalizado completo | **a partir de R$ 2.999,99** |
+| AUREON SaaS | Plataforma com usuários, assinaturas e gestão | **a partir de R$ 4.999,99** |
+
+O AUREON SaaS pode incluir suporte e manutenção a partir de **R$ 199,99 por mês**. O diagnóstico apresenta a oferta compatível com as respostas sem prometer que todo projeto cabe no menor pacote. O pacote Start não inclui marketplace, sistema financeiro, inteligência artificial avançada, painel complexo, pagamentos recorrentes ou integrações externas complexas.
+
+## 17. Próxima fase — Kiwify
 
 Depois que Raphael cadastrar o produto e fornecer o link correto:
 
