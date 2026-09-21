@@ -50,3 +50,11 @@ test("saved result is rendered again when a session resumes", async () => {
   const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
   assert.match(app, /if \(session\.step === "result-screen"\) return renderResult\(\)/);
 });
+
+
+test("saved session resumes automatically without reopening the continue dialog", async () => {
+  const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
+  assert.match(app, /if \(stored\?\.step && stored\.step !== "start-screen"\) \{[\s\S]*session = stored;[\s\S]*restoreCurrentStep\(\);[\s\S]*\}/);
+  assert.doesNotMatch(app, /resume-dialog"\)\.hidden = false/);
+  assert.doesNotMatch(app, /aureon\.diagnostic\.activeTab/);
+});
