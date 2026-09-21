@@ -1,4 +1,4 @@
-const CACHE = "aureon-diagnostico-v1";
+const CACHE = "aureon-diagnostico-v2";
 const SHELL = [
   "./", "./index.html", "./css/diagnostico.css", "./icon.svg",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png",
