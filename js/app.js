@@ -91,15 +91,11 @@ function restoreCurrentStep() {
 $("[data-action='resume']").addEventListener("click", restoreCurrentStep);
 $("[data-action='discard']").addEventListener("click", fresh);
 
-const TAB_SESSION_KEY = "aureon.diagnostic.activeTab";
 const stored = loadSession(localStorage);
-const isSameTabNavigation = sessionStorage.getItem(TAB_SESSION_KEY) === "1";
-sessionStorage.setItem(TAB_SESSION_KEY, "1");
 
 if (stored?.step && stored.step !== "start-screen") {
   session = stored;
-  if (isSameTabNavigation) restoreCurrentStep();
-  else $("#resume-dialog").hidden = false;
+  restoreCurrentStep();
 }
 
 if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
