@@ -33,6 +33,12 @@ test("complex requirements never map to Start", () => {
     });
     assert.notEqual(result.id, "start");
   }
+
+  const saas = calculateRecommendation("build", {
+    essentials: ["subscriptions"],
+  });
+  assert.equal(saas.id, "saas");
+  assert.equal(saas.priceLabel, "Sob orçamento — faça sua oferta");
 });
 
 test("beginner maps to entry course", () => {
