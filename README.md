@@ -8,7 +8,7 @@ Experiência conversacional da AUREON para qualificar dois públicos: quem desej
 - AUREON Start: R$ 599,99.
 - AUREON Pro: R$ 1.499,99.
 - AUREON Business: a partir de R$ 2.999,99.
-- AUREON SaaS: sob orçamento — faça sua oferta.
+- AUREON SaaS: sob orçamento.
 
 ## Arquivos
 
@@ -29,7 +29,7 @@ O WhatsApp Business da AUREON está configurado em `js/site-config.js` como `551
 node --test tests/*.test.js
 ```
 
-A suíte possui 20 testes cobrindo os dois caminhos com nove perguntas, recomendação, identidade/consentimento, sessão local, PWA, privacidade e WhatsApp.
+A suíte possui 25 testes cobrindo os dois caminhos com nove perguntas, recomendação, identidade/consentimento, sessão local, PWA, privacidade e WhatsApp.
 
 ## Publicação e rollback
 
