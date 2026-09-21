@@ -98,4 +98,4 @@ if (stored?.step && stored.step !== "start-screen") {
   restoreCurrentStep();
 }
 
-if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js?v=20260921-4"));
