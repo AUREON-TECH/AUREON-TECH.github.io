@@ -38,7 +38,7 @@ test("complex requirements never map to Start", () => {
     essentials: ["subscriptions"],
   });
   assert.equal(saas.id, "saas");
-  assert.equal(saas.priceLabel, "Sob orçamento — faça sua oferta");
+  assert.equal(saas.priceLabel, "Sob orçamento");
 });
 
 test("beginner maps to entry course", () => {
