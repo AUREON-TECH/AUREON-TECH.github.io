@@ -80,12 +80,26 @@ $("#answer-form").addEventListener("submit", (event) => {
 $("[data-action='back-question']").addEventListener("click", () => { if (session.questionIndex > 0) { session.questionIndex -= 1; renderQuestion(); } else show("route-screen"); });
 $("[data-action='back-identity']").addEventListener("click", () => show("identity-screen"));
 $("#restart-button").addEventListener("click", fresh);
-$("[data-action='resume']").addEventListener("click", () => {
+function restoreCurrentStep() {
   $("#resume-dialog").hidden = true;
+  if (session.identity?.name) $("#route-greeting").textContent = `Obrigado, ${session.identity.name}. Qual resultado você busca agora?`;
   if (session.step === "question-screen") return renderQuestion();
   if (session.step === "result-screen") return renderResult();
   show(session.step || "identity-screen");
-});
+}
+
+$("[data-action='resume']").addEventListener("click", restoreCurrentStep);
 $("[data-action='discard']").addEventListener("click", fresh);
-const stored = loadSession(localStorage); if (stored?.step && stored.step !== "start-screen") { session = stored; $("#resume-dialog").hidden = false; }
+
+const TAB_SESSION_KEY = "aureon.diagnostic.activeTab";
+const stored = loadSession(localStorage);
+const isSameTabNavigation = sessionStorage.getItem(TAB_SESSION_KEY) === "1";
+sessionStorage.setItem(TAB_SESSION_KEY, "1");
+
+if (stored?.step && stored.step !== "start-screen") {
+  session = stored;
+  if (isSameTabNavigation) restoreCurrentStep();
+  else $("#resume-dialog").hidden = false;
+}
+
 if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
