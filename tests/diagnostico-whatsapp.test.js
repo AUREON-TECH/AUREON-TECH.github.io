@@ -38,7 +38,7 @@ test("translates internal diagnostic codes into client-friendly Portuguese", () 
       solution:"unknown"
     },
     utm:{source:"ig",content:"link_in_bio"}
-  }, {title:"AUREON SaaS",priceLabel:"Sob orçamento — faça sua oferta"});
+  }, {title:"AUREON SaaS",priceLabel:"Sob orçamento"});
 
   assert.match(message, /Quem vai usar: Minha equipe/);
   assert.match(message, /Objetivo principal: Organizar atendimentos/);
