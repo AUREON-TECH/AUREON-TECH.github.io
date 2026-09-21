@@ -1,9 +1,9 @@
-const CACHE = "aureon-diagnostico-v7";
+const CACHE = "aureon-diagnostico-v8";
 const SHELL = [
-  "./", "./index.html", "./css/diagnostico.css?v=20260921-7", "./icon.svg",
+  "./", "./index.html", "./css/diagnostico.css?v=20260921-8", "./icon.svg",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png",
   "./js/site-config.js", "./js/questions.js", "./js/engine.js", "./js/state.js",
-  "./js/whatsapp.js", "./js/app.js?v=20260921-7", "./terms.html", "./privacy.html",
+  "./js/whatsapp.js", "./js/app.js?v=20260921-8", "./terms.html", "./privacy.html",
   "./manifest.webmanifest"
 ];
 

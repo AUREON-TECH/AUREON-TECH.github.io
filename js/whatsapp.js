@@ -1,18 +1,106 @@
-export function isPublishableNumber(value) { return /^55\d{10,11}$/.test(String(value || "").replace(/\D/g, "")); }
+import { BUILD_QUESTIONS, LEARN_QUESTIONS } from "./questions.js";
+
+export function isPublishableNumber(value) {
+  return /^55\d{10,11}$/.test(String(value || "").replace(/\D/g, ""));
+}
+
+const FIELD_LABELS = {
+  build: {
+    segment: "Segmento",
+    problem: "Problema que quer resolver",
+    users: "Quem vai usar",
+    goal: "Objetivo principal",
+    essentials: "Funções indispensáveis",
+    existing: "O que já possui",
+    start: "Prazo para começar",
+    investment: "Faixa de investimento",
+    solution: "Formato desejado",
+  },
+  learn: {
+    level: "Nível atual",
+    builtBefore: "Já criou aplicativo",
+    objective: "O que quer construir",
+    incomeGoal: "Objetivo principal",
+    weeklyTime: "Tempo disponível por semana",
+    format: "Forma de aprendizado",
+    tools: "Ferramentas que já utiliza",
+    sellApps: "Pretende vender aplicativos",
+    start: "Quando quer começar",
+  },
+};
+
+function routeQuestions(route) {
+  return route === "build" ? BUILD_QUESTIONS : LEARN_QUESTIONS;
+}
+
+function displayValue(question, raw) {
+  if (raw == null || raw === "") return "";
+  if (question?.type === "text") return String(raw);
+
+  const values = Array.isArray(raw) ? raw : [raw];
+  return values.map((value) => {
+    const match = question?.options?.find((item) => item.value === value);
+    return match?.label || String(value);
+  }).join(", ");
+}
+
+function displayOrigin(utm = {}) {
+  const sourceMap = {
+    ig: "Instagram",
+    instagram: "Instagram",
+    facebook: "Facebook",
+    fb: "Facebook",
+    whatsapp: "WhatsApp",
+    direct: "Acesso direto",
+  };
+  const contentMap = {
+    link_in_bio: "Link na bio",
+    bio: "Link na bio",
+    story: "Story",
+    stories: "Stories",
+    reel: "Reel",
+  };
+
+  const source = sourceMap[String(utm.source || "").toLowerCase()] || utm.source || "";
+  const content = contentMap[String(utm.content || "").toLowerCase()] || utm.content || "";
+  return [source, content].filter(Boolean).join(" / ");
+}
 
 export function buildWhatsAppMessage(session, recommendation) {
-  const route = session.route === "build" ? "quero criar um aplicativo" : "quero aprender a criar aplicativos";
+  const route = session.route === "build" ? "build" : "learn";
+  const intent = route === "build"
+    ? "quero criar um aplicativo"
+    : "quero aprender a criar aplicativos";
+
   const rows = [
-    `Olá, Raphael. Fiz o Diagnóstico AUREON e ${route}.`,
+    `Olá, Raphael. Fiz o Diagnóstico AUREON e ${intent}.`,
+    "",
+    "*Dados do diagnóstico*",
     `Nome: ${session.identity?.name || "Não informado"}`,
     `Cidade: ${session.identity?.city || "Não informada"}`,
-    `Recomendação: ${recommendation.title} — ${recommendation.priceLabel}`,
   ];
-  for (const [key, raw] of Object.entries(session.answers || {})) {
-    const value = Array.isArray(raw) ? raw.join(", ") : raw;
-    if (value) rows.push(`${key}: ${value}`);
+
+  if (session.identity?.email) rows.push(`E-mail: ${session.identity.email}`);
+
+  rows.push(
+    `Recomendação: ${recommendation.title} — ${recommendation.priceLabel}`,
+    "",
+    "*Resumo*",
+  );
+
+  const questions = routeQuestions(route);
+  const labels = FIELD_LABELS[route];
+
+  for (const question of questions) {
+    const raw = session.answers?.[question.id];
+    const value = displayValue(question, raw);
+    if (value) rows.push(`• ${labels[question.id] || question.prompt}: ${value}`);
   }
-  if (session.utm?.source) rows.push(`Origem: ${session.utm.source}${session.utm.content ? ` / ${session.utm.content}` : ""}`);
+
+  const origin = displayOrigin(session.utm);
+  if (origin) rows.push("", `Origem: ${origin}`);
+
+  rows.push("", "Quero saber qual é o próximo passo.");
   return rows.join("\n");
 }
 

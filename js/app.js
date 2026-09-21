@@ -212,7 +212,7 @@ show("start-screen", { historyMode: "replace" });
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
-    const registration = await navigator.serviceWorker.register("./sw.js?v=20260921-7", { updateViaCache: "none" });
+    const registration = await navigator.serviceWorker.register("./sw.js?v=20260921-8", { updateViaCache: "none" });
     await registration.update();
   });
 }
