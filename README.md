@@ -8,7 +8,7 @@ Experiência conversacional da AUREON para qualificar dois públicos: quem desej
 - AUREON Start: R$ 599,99.
 - AUREON Pro: R$ 1.499,99.
 - AUREON Business: a partir de R$ 2.999,99.
-- AUREON SaaS: a partir de R$ 4.999,99; suporte a partir de R$ 199,99/mês.
+- AUREON SaaS: sob orçamento — faça sua oferta.
 
 ## Arquivos
 
@@ -21,7 +21,7 @@ Experiência conversacional da AUREON para qualificar dois públicos: quem desej
 
 ## Configurar WhatsApp
 
-Insira o número comercial confirmado em `js/site-config.js`, usando país, DDD e número, somente dígitos. Exemplo de formato: `5511999999999`. Não publique enquanto o teste `production number is publishable` não estiver verde.
+O WhatsApp Business da AUREON está configurado em `js/site-config.js` como `5511926868865` (+55 11 92686-8865).
 
 ## Testes
 
@@ -29,6 +29,10 @@ Insira o número comercial confirmado em `js/site-config.js`, usando país, DDD 
 node --test tests/*.test.js
 ```
 
+A suíte possui 20 testes cobrindo os dois caminhos com nove perguntas, recomendação, identidade/consentimento, sessão local, PWA, privacidade e WhatsApp.
+
 ## Publicação e rollback
 
-O GitHub Pages publica a branch principal. Para desfazer uma entrega, reverta o commit de merge; o site anterior permanece no histórico. A Kiwify ainda não está ativa porque o produto e o checkout precisam ser cadastrados e verificados primeiro.
+O código do Diagnóstico AUREON está integrado à branch `main`, usada pelo GitHub Pages para o endereço oficial `https://aureon-tech.github.io/`. Para desfazer uma entrega, reverta o commit correspondente; o histórico anterior permanece disponível.
+
+A Kiwify ainda não está ativa porque o produto e o checkout precisam ser cadastrados e verificados primeiro.
