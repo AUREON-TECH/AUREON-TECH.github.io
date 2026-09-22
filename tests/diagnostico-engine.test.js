@@ -48,6 +48,7 @@ test("beginner maps to entry course", () => {
   });
   assert.equal(result.id, "learn-entry");
   assert.equal(result.priceLabel, "R$ 59,99");
+  assert.equal(result.checkoutUrl, "https://pay.kiwify.com.br/NpaNtPV");
 });
 
 test("unknown route is rejected", () => {
