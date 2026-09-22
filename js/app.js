@@ -96,7 +96,11 @@ function renderResult(options = {}) {
   $("#result-price").textContent = result.priceLabel;
   const button = $("#whatsapp-button");
 
-  if (isPublishableNumber(SITE_CONFIG.whatsappNumber)) {
+  if (result.checkoutUrl) {
+    button.disabled = false;
+    button.textContent = result.cta;
+    button.onclick = () => window.location.assign(result.checkoutUrl);
+  } else if (isPublishableNumber(SITE_CONFIG.whatsappNumber)) {
     button.disabled = false;
     button.textContent = result.cta;
     button.onclick = () => window.location.assign(buildWhatsAppUrl(SITE_CONFIG.whatsappNumber, buildWhatsAppMessage(session, result)));
