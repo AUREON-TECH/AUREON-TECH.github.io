@@ -5,7 +5,7 @@ const RECOMMENDATIONS = Object.freeze({
   pro: { id: "pro", title: "AUREON Pro", description: "Aplicativo com login, banco de dados e painel administrativo.", priceLabel: "R$ 1.499,99", cta: "Planejar meu aplicativo Pro" },
   business: { id: "business", title: "AUREON Business", description: "Sistema personalizado para processos e integrações mais completas.", priceLabel: "a partir de R$ 2.999,99", cta: "Solicitar proposta personalizada" },
   saas: { id: "saas", title: "AUREON SaaS", description: "Plataforma com usuários, assinaturas e gestão contínua.", priceLabel: "Sob orçamento", cta: "Planejar minha plataforma" },
-  "learn-entry": { id: "learn-entry", title: "Método AUREON", description: "Aprenda o processo prático para criar e publicar seu primeiro aplicativo.", priceLabel: "R$ 59,99", cta: "Quero aprender com a AUREON" },
+  "learn-entry": { id: "learn-entry", title: "Método AUREON", description: "Aprenda o processo prático para criar e publicar seu primeiro aplicativo.", priceLabel: "R$ 59,99", cta: "Acessar o Método AUREON — R$ 59,99", checkoutUrl: "https://pay.kiwify.com.br/NpaNtPV" },
   "learn-mentoring": { id: "learn-mentoring", title: "Mentoria AUREON", description: "Acompanhamento para desenvolver projetos e transformar a habilidade em renda.", priceLabel: "proposta personalizada", cta: "Quero falar sobre mentoria" },
 });
 
