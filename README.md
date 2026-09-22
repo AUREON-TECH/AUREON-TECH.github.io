@@ -35,4 +35,4 @@ A suíte possui 25 testes cobrindo os dois caminhos com nove perguntas, recomend
 
 O código do Diagnóstico AUREON está integrado à branch `main`, usada pelo GitHub Pages para o endereço oficial `https://aureon-tech.github.io/`. Para desfazer uma entrega, reverta o commit correspondente; o histórico anterior permanece disponível.
 
-A Kiwify ainda não está ativa porque o produto e o checkout precisam ser cadastrados e verificados primeiro.
+O resultado Método AUREON leva ao checkout validado da Kiwify; os demais resultados continuam no atendimento pelo WhatsApp.
