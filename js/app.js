@@ -9,14 +9,7 @@ let session = createSession(readUtm(location.search));
 let navIndex = 0;
 
 function snapshot(step = session.step) {
-  return {
-    aureonDiagnostic: true,
-    sessionId: session.id,
-    step,
-    questionIndex: session.questionIndex,
-    route: session.route,
-    navIndex,
-  };
+  return { aureonDiagnostic: true, sessionId: session.id, step, questionIndex: session.questionIndex, route: session.route, navIndex };
 }
 
 function syncHistory(step, mode) {
@@ -40,7 +33,7 @@ function fresh() {
   clearSession(localStorage);
   session = createSession(readUtm(location.search));
   navIndex = 0;
-  show("identity-screen", { historyMode: "replace" });
+  show("start-screen", { historyMode: "replace" });
 }
 
 function esc(value) {
@@ -48,19 +41,17 @@ function esc(value) {
 }
 
 function hydrateIdentity() {
-  if (!session.identity) return;
-  const fields = ["name", "phone", "email", "city"];
-  fields.forEach((key) => {
-    const input = $("#" + key);
-    if (input && session.identity[key] != null) input.value = session.identity[key];
-  });
-  const consent = $("#consent");
-  if (consent) consent.checked = session.identity.consent === true;
+  const input = $("#name");
+  if (input && session.identity?.name) input.value = session.identity.name;
 }
 
 function renderQuestion(options = {}) {
   const questions = getRouteQuestions(session.route);
-  if (session.questionIndex >= questions.length) return renderResult(options);
+  if (session.questionIndex >= questions.length) {
+    hydrateIdentity();
+    return show("identity-screen", options);
+  }
+
   const q = questions[session.questionIndex];
   const progress = getProgress(session.questionIndex, questions.length);
   $("#progress-value").value = progress;
@@ -68,23 +59,14 @@ function renderQuestion(options = {}) {
   $("#progress-copy").textContent = `${session.questionIndex + 1} de ${questions.length}`;
   $("#conversation").innerHTML = `<article class="bubble"><span class="avatar">A</span><p>${q.prompt}</p></article>`;
   const saved = session.answers[q.id];
+  const selected = Array.isArray(saved) ? saved : [saved];
+  const optionsHtml = q.options.map((item) => `<label class="option-button"><input type="radio" name="answer" value="${item.value}" ${selected.includes(item.value) ? "checked" : ""}> ${item.label}</label>`).join("");
+  $("#answer-form").innerHTML = `<fieldset><legend class="microcopy">Selecione uma opção</legend><div class="options">${optionsHtml}</div></fieldset><p class="field-error" data-question-error></p><button class="primary-button continue-button">Continuar →</button>`;
 
-  if (q.type === "text") {
-    $("#answer-form").innerHTML = `<label for="current-answer">Sua resposta</label><input id="current-answer" name="answer" value="${esc(saved || "")}"><p class="field-error" data-question-error></p><button class="primary-button">Continuar →</button>`;
-  } else {
-    const selected = Array.isArray(saved) ? saved : [saved];
-    const type = q.type === "multi" ? "checkbox" : "radio";
-    const optionsHtml = q.options.map((item) => `<label class="option-button"><input type="${type}" name="answer" value="${item.value}" ${selected.includes(item.value) ? "checked" : ""}> ${item.label}</label>`).join("");
-    $("#answer-form").innerHTML = `<fieldset><legend class="microcopy">${q.type === "multi" ? "Selecione uma ou mais opções" : "Selecione uma opção"}</legend><div class="options">${optionsHtml}</div></fieldset><p class="field-error" data-question-error></p><button class="primary-button">Continuar →</button>`;
-  }
-
+  $("#answer-form").querySelectorAll('input[type="radio"]').forEach((input) => {
+    input.addEventListener("change", () => setTimeout(() => $("#answer-form").requestSubmit(), 160), { once: true });
+  });
   show("question-screen", options);
-}
-
-function answerValue(form, q) {
-  if (q.type === "multi") return [...form.querySelectorAll("input:checked")].map((i) => i.value);
-  if (q.type === "single") return form.querySelector("input:checked")?.value || "";
-  return form.querySelector("input")?.value.trim() || "";
 }
 
 function renderResult(options = {}) {
@@ -94,32 +76,39 @@ function renderResult(options = {}) {
   $("#result-description").textContent = result.description;
   $("#result-product").textContent = result.title;
   $("#result-price").textContent = result.priceLabel;
-  const button = $("#whatsapp-button");
 
+  const primary = $("#whatsapp-button");
+  const support = $("#support-button");
+  const canWhatsApp = isPublishableNumber(SITE_CONFIG.whatsappNumber);
+  const whatsappUrl = canWhatsApp ? buildWhatsAppUrl(SITE_CONFIG.whatsappNumber, buildWhatsAppMessage(session, result)) : "";
+
+  support.hidden = true;
   if (result.checkoutUrl) {
-    button.disabled = false;
-    button.textContent = result.cta;
-    button.onclick = () => window.location.assign(result.checkoutUrl);
-  } else if (isPublishableNumber(SITE_CONFIG.whatsappNumber)) {
-    button.disabled = false;
-    button.textContent = result.cta;
-    button.onclick = () => window.location.assign(buildWhatsAppUrl(SITE_CONFIG.whatsappNumber, buildWhatsAppMessage(session, result)));
+    primary.disabled = false;
+    primary.textContent = result.cta;
+    primary.onclick = () => window.location.assign(result.checkoutUrl);
+    if (canWhatsApp) {
+      support.hidden = false;
+      support.textContent = "Tirar uma dúvida no WhatsApp";
+      support.onclick = () => window.location.assign(whatsappUrl);
+    }
+  } else if (canWhatsApp) {
+    primary.disabled = false;
+    primary.textContent = "Receber uma análise pelo WhatsApp";
+    primary.onclick = () => window.location.assign(whatsappUrl);
   } else {
-    button.disabled = true;
-    button.textContent = "WhatsApp da AUREON em configuração";
+    primary.disabled = true;
+    primary.textContent = "WhatsApp da AUREON em configuração";
   }
-
   show("result-screen", options);
 }
 
 function restoreCurrentStep({ historyMode = null } = {}) {
   hydrateIdentity();
-  if (session.identity?.name) {
-    $("#route-greeting").textContent = `Obrigado, ${session.identity.name}. Qual resultado você busca agora?`;
-  }
   if (session.step === "question-screen" && session.route) return renderQuestion({ historyMode });
-  if (session.step === "result-screen" && session.route) return renderResult({ historyMode });
-  const safeStep = ["start-screen", "identity-screen", "route-screen"].includes(session.step) ? session.step : "identity-screen";
+  if (session.step === "identity-screen" && session.route) return show("identity-screen", { historyMode });
+  if (session.step === "result-screen" && session.route && session.identity?.name) return renderResult({ historyMode });
+  const safeStep = ["start-screen", "route-screen"].includes(session.step) ? session.step : "start-screen";
   show(safeStep, { historyMode });
 }
 
@@ -127,38 +116,17 @@ function fallbackBackQuestion() {
   if (session.questionIndex > 0) {
     session.questionIndex -= 1;
     renderQuestion({ historyMode: "replace" });
-  } else {
-    show("route-screen", { historyMode: "replace" });
-  }
+  } else show("route-screen", { historyMode: "replace" });
 }
 
-$("[data-action='start']").addEventListener("click", () => show("identity-screen"));
-
-$("#identity-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  const identity = {
-    name: data.get("name"),
-    phone: data.get("phone"),
-    email: data.get("email"),
-    city: data.get("city"),
-    consent: data.get("consent") === "on",
-  };
-  const validation = validateIdentity(identity);
-  document.querySelectorAll("[data-error]").forEach((node) => {
-    node.textContent = validation.errors[node.dataset.error] || "";
-  });
-  if (!validation.valid) return $("#" + Object.keys(validation.errors)[0])?.focus();
-
-  session.identity = identity;
-  $("#route-greeting").textContent = `Obrigado, ${identity.name}. Qual resultado você busca agora?`;
-  show("route-screen");
-});
+$("[data-action='start']").addEventListener("click", () => show("route-screen"));
+$("[data-action='back-start']").addEventListener("click", () => show("start-screen", { historyMode: "replace" }));
 
 document.querySelectorAll("[data-route]").forEach((button) => button.addEventListener("click", () => {
   session.route = button.dataset.route;
   session.questionIndex = 0;
   session.answers = {};
+  session.identity = {};
   renderQuestion();
 }));
 
@@ -166,9 +134,9 @@ $("#answer-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const questions = getRouteQuestions(session.route);
   const q = questions[session.questionIndex];
-  const value = answerValue(event.currentTarget, q);
-  if (q.required && (!value || value.length === 0)) {
-    event.currentTarget.querySelector("[data-question-error]").textContent = "Responda para continuar.";
+  const value = event.currentTarget.querySelector("input:checked")?.value || "";
+  if (!value) {
+    event.currentTarget.querySelector("[data-question-error]").textContent = "Escolha uma opção para continuar.";
     return;
   }
   session.answers[q.id] = value;
@@ -177,14 +145,23 @@ $("#answer-form").addEventListener("submit", (event) => {
   renderQuestion();
 });
 
-$("[data-action='back-question']").addEventListener("click", () => {
-  if (navIndex > 0) history.back();
-  else fallbackBackQuestion();
+$("#identity-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const identity = { name: new FormData(event.currentTarget).get("name") };
+  const validation = validateIdentity(identity);
+  $("[data-error='name']").textContent = validation.errors.name || "";
+  if (!validation.valid) return $("#name").focus();
+  session.identity = identity;
+  renderResult();
 });
 
-$("[data-action='back-identity']").addEventListener("click", () => {
-  if (navIndex > 0) history.back();
-  else show("identity-screen", { historyMode: "replace" });
+$("[data-action='back-question']").addEventListener("click", () => {
+  if (navIndex > 0) history.back(); else fallbackBackQuestion();
+});
+
+$("[data-action='back-from-name']").addEventListener("click", () => {
+  session.questionIndex = Math.max(0, getRouteQuestions(session.route).length - 1);
+  renderQuestion({ historyMode: "replace" });
 });
 
 $("#restart-button").addEventListener("click", fresh);
@@ -192,17 +169,11 @@ $("#restart-button").addEventListener("click", fresh);
 window.addEventListener("popstate", (event) => {
   const state = event.state;
   if (!state?.aureonDiagnostic) return;
-
-  if (state.sessionId && state.sessionId !== session.id) {
-    navIndex = 0;
-    show("identity-screen", { historyMode: "replace" });
-    return;
-  }
-
+  if (state.sessionId && state.sessionId !== session.id) return fresh();
   navIndex = Number.isInteger(state.navIndex) ? state.navIndex : 0;
   const stored = loadSession(localStorage);
   if (stored) session = stored;
-  session.step = state.step || "identity-screen";
+  session.step = state.step || "start-screen";
   if (Number.isInteger(state.questionIndex)) session.questionIndex = state.questionIndex;
   if (state.route) session.route = state.route;
   saveSession(localStorage, session);
@@ -216,7 +187,7 @@ show("start-screen", { historyMode: "replace" });
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
-    const registration = await navigator.serviceWorker.register("./sw.js?v=20260921-8", { updateViaCache: "none" });
+    const registration = await navigator.serviceWorker.register("./sw.js?v=20260923-9", { updateViaCache: "none" });
     await registration.update();
   });
 }

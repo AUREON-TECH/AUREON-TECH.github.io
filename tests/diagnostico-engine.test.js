@@ -2,53 +2,29 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { getRouteQuestions, getProgress, calculateRecommendation } from "../js/engine.js";
 
-test("each route has nine questions", () => {
-  assert.equal(getRouteQuestions("build").length, 9);
-  assert.equal(getRouteQuestions("learn").length, 9);
+test("each adaptive route asks exactly three questions", () => {
+  assert.equal(getRouteQuestions("build").length, 3);
+  assert.equal(getRouteQuestions("learn").length, 3);
 });
 
-test("progress is bounded", () => {
-  assert.equal(getProgress(0, 9), 0);
-  assert.equal(getProgress(9, 9), 100);
-  assert.equal(getProgress(12, 9), 100);
-  assert.equal(getProgress(-1, 9), 0);
+test("progress reaches 100 after three answers", () => {
+  assert.equal(getProgress(0, 3), 0);
+  assert.equal(getProgress(3, 3), 100);
 });
 
-test("simple showcase maps to Start", () => {
-  const result = calculateRecommendation("build", {
-    goal: "showcase",
-    essentials: ["catalog", "whatsapp"],
-    investment: "starter",
-  });
-  assert.equal(result.id, "start");
-  assert.equal(result.priceLabel, "R$ 599,99");
+test("build investment maps directly to the matching commercial offer", () => {
+  assert.equal(calculateRecommendation("build", { investment: "starter" }).id, "start");
+  assert.equal(calculateRecommendation("build", { investment: "pro" }).id, "pro");
+  assert.equal(calculateRecommendation("build", { investment: "business" }).id, "business");
+  assert.equal(calculateRecommendation("build", { investment: "saas" }).id, "saas");
 });
 
-test("complex requirements never map to Start", () => {
-  for (const essential of ["marketplace", "subscriptions", "finance", "advanced-ai", "integrations"]) {
-    const result = calculateRecommendation("build", {
-      goal: "showcase",
-      essentials: [essential],
-      investment: "starter",
-    });
-    assert.notEqual(result.id, "start");
+test("learning route always leads to the available Method AUREON checkout", () => {
+  for (const builtBefore of ["never", "unfinished", "simple"]) {
+    const result = calculateRecommendation("learn", { builtBefore });
+    assert.equal(result.id, "learn-entry");
+    assert.equal(result.checkoutUrl, "https://pay.kiwify.com.br/NpaNtPV");
   }
-
-  const saas = calculateRecommendation("build", {
-    essentials: ["subscriptions"],
-  });
-  assert.equal(saas.id, "saas");
-  assert.equal(saas.priceLabel, "Sob orçamento");
-});
-
-test("beginner maps to entry course", () => {
-  const result = calculateRecommendation("learn", {
-    level: "beginner",
-    objective: "first-app",
-  });
-  assert.equal(result.id, "learn-entry");
-  assert.equal(result.priceLabel, "R$ 59,99");
-  assert.equal(result.checkoutUrl, "https://pay.kiwify.com.br/NpaNtPV");
 });
 
 test("unknown route is rejected", () => {
