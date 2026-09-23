@@ -70,7 +70,9 @@ test("browser and mobile back navigation stays inside the diagnostic flow", asyn
 
 test("service worker update bypasses browser cache", async () => {
   const app = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
+  const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
   assert.match(app, /updateViaCache:\s*"none"/);
+  assert.match(html, /js\/app\.js\?v=20260923-10/);
 });
 
 
