@@ -9,14 +9,14 @@ class MapStorage {
   removeItem(key) { this.data.delete(key); }
 }
 
-test("requires valid identity and consent", () => {
+test("short diagnostic requires only a valid visitor name", () => {
   const result = validateIdentity({ name:"R", phone:"123", email:"x", city:"", consent:false });
   assert.equal(result.valid, false);
-  assert.deepEqual(Object.keys(result.errors).sort(), ["city","consent","email","name","phone"]);
+  assert.deepEqual(Object.keys(result.errors), ["name"]);
 });
 
-test("accepts a valid Brazilian identity", () => {
-  assert.equal(validateIdentity({ name:"Ana", phone:"(12) 99999-9999", email:"ana@example.com", city:"Campos do Jordão", consent:true }).valid, true);
+test("accepts a valid visitor name", () => {
+  assert.equal(validateIdentity({ name:"Ana" }).valid, true);
 });
 
 test("keeps only approved UTM fields", () => {

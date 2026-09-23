@@ -1,10 +1,10 @@
 import { BUILD_QUESTIONS, LEARN_QUESTIONS } from "./questions.js";
 
 const RECOMMENDATIONS = Object.freeze({
-  start: { id: "start", title: "AUREON Start", description: "Um primeiro aplicativo adaptado ao seu nicho, com presença digital e contato direto.", priceLabel: "R$ 599,99", cta: "Conversar sobre meu aplicativo" },
-  pro: { id: "pro", title: "AUREON Pro", description: "Aplicativo com login, banco de dados e painel administrativo.", priceLabel: "R$ 1.499,99", cta: "Planejar meu aplicativo Pro" },
-  business: { id: "business", title: "AUREON Business", description: "Sistema personalizado para processos e integrações mais completas.", priceLabel: "a partir de R$ 2.999,99", cta: "Solicitar proposta personalizada" },
-  saas: { id: "saas", title: "AUREON SaaS", description: "Plataforma com usuários, assinaturas e gestão contínua.", priceLabel: "Sob orçamento", cta: "Planejar minha plataforma" },
+  start: { id: "start", title: "AUREON Start", description: "Um primeiro aplicativo adaptado ao seu nicho, com presença digital e contato direto.", priceLabel: "", cta: "Conversar sobre meu aplicativo" },
+  pro: { id: "pro", title: "AUREON Pro", description: "Aplicativo com login, banco de dados e painel administrativo.", priceLabel: "", cta: "Planejar meu aplicativo Pro" },
+  business: { id: "business", title: "AUREON Business", description: "Sistema personalizado para processos e integrações mais completas.", priceLabel: "", cta: "Solicitar proposta personalizada" },
+  saas: { id: "saas", title: "AUREON SaaS", description: "Plataforma com usuários, assinaturas e gestão contínua.", priceLabel: "", cta: "Planejar minha plataforma" },
   "learn-entry": { id: "learn-entry", title: "Método AUREON", description: "Aprenda o processo prático para criar e publicar seu primeiro aplicativo.", priceLabel: "R$ 59,99", cta: "Acessar o Método AUREON — R$ 59,99", checkoutUrl: "https://pay.kiwify.com.br/NpaNtPV" },
   "learn-mentoring": { id: "learn-mentoring", title: "Mentoria AUREON", description: "Acompanhamento para desenvolver projetos e transformar a habilidade em renda.", priceLabel: "proposta personalizada", cta: "Quero falar sobre mentoria" },
 });
@@ -15,12 +15,12 @@ export function calculateRecommendation(route, answers = {}) {
   assertRoute(route);
   if (route === "learn") return RECOMMENDATIONS["learn-entry"];
 
-  const offerByInvestment = {
-    starter: "start",
-    pro: "pro",
-    business: "business",
-    saas: "saas",
-    unknown: "start",
+  const offerBySolution = {
+    "first-app": "start",
+    "app-database": "pro",
+    "business-system": "business",
+    "saas-platform": "saas",
+    guidance: "start",
   };
-  return RECOMMENDATIONS[offerByInvestment[answers.investment] || "start"];
+  return RECOMMENDATIONS[offerBySolution[answers.solution] || "start"];
 }

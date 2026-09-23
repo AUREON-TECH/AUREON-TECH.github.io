@@ -75,7 +75,9 @@ function renderResult(options = {}) {
   $("#result-title").textContent = `${session.identity.name}, encontramos o melhor caminho para você.`;
   $("#result-description").textContent = result.description;
   $("#result-product").textContent = result.title;
-  $("#result-price").textContent = result.priceLabel;
+  const price = $("#result-price");
+  price.textContent = result.priceLabel;
+  price.hidden = !result.priceLabel;
 
   const primary = $("#whatsapp-button");
   const support = $("#support-button");
@@ -187,7 +189,7 @@ show("start-screen", { historyMode: "replace" });
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
-    const registration = await navigator.serviceWorker.register("./sw.js?v=20260923-9", { updateViaCache: "none" });
+    const registration = await navigator.serviceWorker.register("./sw.js?v=20260923-10", { updateViaCache: "none" });
     await registration.update();
   });
 }

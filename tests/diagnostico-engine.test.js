@@ -12,11 +12,18 @@ test("progress reaches 100 after three answers", () => {
   assert.equal(getProgress(3, 3), 100);
 });
 
-test("build investment maps directly to the matching commercial offer", () => {
-  assert.equal(calculateRecommendation("build", { investment: "starter" }).id, "start");
-  assert.equal(calculateRecommendation("build", { investment: "pro" }).id, "pro");
-  assert.equal(calculateRecommendation("build", { investment: "business" }).id, "business");
-  assert.equal(calculateRecommendation("build", { investment: "saas" }).id, "saas");
+test("build asks for the desired solution without displaying prices", () => {
+  const thirdQuestion = getRouteQuestions("build")[2];
+  assert.equal(thirdQuestion.id, "solution");
+  assert.doesNotMatch(JSON.stringify(thirdQuestion), /R\$|investimento/i);
+});
+
+test("build solution maps to the matching offer without exposing its price", () => {
+  for (const [solution, expected] of [["first-app", "start"], ["app-database", "pro"], ["business-system", "business"], ["saas-platform", "saas"], ["guidance", "start"]]) {
+    const result = calculateRecommendation("build", { solution });
+    assert.equal(result.id, expected);
+    assert.equal(result.priceLabel, "");
+  }
 });
 
 test("learning route always leads to the available Method AUREON checkout", () => {

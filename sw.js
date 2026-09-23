@@ -1,9 +1,9 @@
-const CACHE = "aureon-diagnostico-v9";
+const CACHE = "aureon-diagnostico-v10";
 const SHELL = [
-  "./", "./index.html", "./css/diagnostico.css?v=20260923-9", "./icon.svg",
+  "./", "./index.html", "./css/diagnostico.css?v=20260923-10", "./icon.svg",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png",
   "./js/site-config.js", "./js/questions.js", "./js/engine.js", "./js/state.js",
-  "./js/whatsapp.js", "./js/app.js?v=20260923-9", "./terms.html", "./privacy.html",
+  "./js/whatsapp.js", "./js/app.js?v=20260923-10", "./terms.html", "./privacy.html",
   "./manifest.webmanifest"
 ];
 self.addEventListener("install",(event)=>{event.waitUntil(caches.open(CACHE).then((cache)=>cache.addAll(SHELL)));self.skipWaiting();});

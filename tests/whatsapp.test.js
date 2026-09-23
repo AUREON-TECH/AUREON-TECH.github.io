@@ -6,13 +6,14 @@ test("commercial WhatsApp summary contains only the three adaptive build answers
   const message = buildWhatsAppMessage({
     route: "build",
     identity: { name: "Raphael" },
-    answers: { goal: "management", stage: "process", investment: "pro" },
+    answers: { goal: "management", stage: "process", solution: "app-database" },
     utm: { source: "facebook", content: "group" },
-  }, { title: "AUREON Pro", priceLabel: "R$ 1.499,99" });
+  }, { title: "AUREON Pro", priceLabel: "" });
 
   assert.match(message, /O que deseja criar: Gestão e produtividade/);
   assert.match(message, /Etapa atual: Já tenho um processo ou planilha/);
-  assert.match(message, /Faixa de investimento: Entre R\$ 600 e R\$ 1\.500/);
+  assert.match(message, /Solução desejada: Aplicativo com login e banco de dados/);
+  assert.doesNotMatch(message, /R\$|investimento/i);
   assert.doesNotMatch(message, /Cidade:/);
   assert.doesNotMatch(message, /E-mail:/);
 });
