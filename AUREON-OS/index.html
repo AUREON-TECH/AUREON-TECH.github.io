@@ -18,8 +18,11 @@ button{font:inherit}.shell{max-width:1440px;margin:auto;padding:22px}.top{displa
 .office{position:relative;min-height:500px;margin-top:12px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px),linear-gradient(145deg,#0b1525,#040914);background-size:38px 38px,38px 38px,auto}.wall-logo{position:absolute;left:50%;top:25px;transform:translateX(-50%);font-size:30px;font-weight:900;letter-spacing:.35em;color:#d6ae5530}.room{position:absolute;top:90px;width:190px;height:80px;border:1px solid #ffffff10;border-radius:14px;display:grid;place-items:center;color:var(--muted);font-size:10px;letter-spacing:.12em}.meeting{left:20px}.lab{right:20px}.desks{position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;align-items:end;min-height:500px;padding:200px 25px 30px}
 .agent{position:relative;min-height:180px;border:1px solid transparent;border-radius:14px;background:transparent;color:#fff;cursor:pointer;transition:.2s}.agent:hover,.agent.sel{border-color:#1397ff55;background:#1397ff0c;transform:translateY(-4px)}.person{position:absolute;left:50%;top:24px;transform:translateX(-50%);animation:idle 3.4s ease-in-out infinite}.agent.working .person{animation:work 2.5s ease-in-out infinite}.head{width:36px;height:36px;border:2px solid #ffffffbb;border-radius:50%;display:grid;place-items:center;color:#06101e;background:linear-gradient(145deg,#f5c99b,#d8a77a);font-size:9px;font-weight:900;margin:auto}.body{width:42px;height:47px;margin:-2px auto 0;border-radius:12px 12px 5px 5px;background:linear-gradient(145deg,#172b47,#091426)}.working .body{background:linear-gradient(145deg,#0f6fb4,#0b2f53);box-shadow:0 0 22px #1397ff33}.blocked .body{background:linear-gradient(145deg,#6a2c3b,#29121a)}.desk{position:absolute;left:50%;top:100px;width:92px;height:38px;transform:translateX(-50%) skewY(-3deg);border:1px solid #ffffff12;background:linear-gradient(145deg,#172030,#080d16);box-shadow:0 14px 24px #0008}.monitor{position:absolute;left:27px;top:-30px;width:40px;height:29px;border:1px solid #1397ff44;background:#07111f;box-shadow:inset 0 0 14px #1397ff20}.agent .name{position:absolute;left:4px;right:4px;bottom:26px;font-size:11px;font-weight:800}.agent .status{position:absolute;left:4px;right:4px;bottom:8px;color:var(--muted);font-size:10px}.working .status{color:var(--green)}.blocked .status{color:var(--danger)}
 .inspect{display:grid;grid-template-columns:auto 1fr minmax(240px,.7fr);gap:18px;align-items:center;margin-top:12px;padding:20px;border:1px solid var(--line);border-radius:18px;background:#07101bd9}.avatar{width:66px;height:66px;border:1px solid var(--line);border-radius:18px;display:grid;place-items:center;font-weight:900;font-size:18px}.inspect h3{font-size:22px;margin:2px 0 5px}.inspect p{margin:0;color:var(--muted);line-height:1.5}.caps{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.caps span{padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:10px}.activity{border-left:1px solid var(--line);padding-left:18px}.pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#ffffff08;font-size:10px;font-weight:800;margin-bottom:8px}.pill.working{color:var(--green);background:#54e3a315}.pill.blocked{color:var(--danger);background:#ff718515}.note{margin-top:14px;color:#72849d;font-size:11px;text-align:center}
+
+.command-center{margin:0 0 20px;border:1px solid #d6ae5538;border-radius:22px;background:linear-gradient(145deg,#0b1422ee,#050a12ee);box-shadow:0 24px 60px #0007;overflow:hidden}
+.command-grid{display:grid;grid-template-columns:minmax(280px,.75fr) minmax(360px,1.25fr);gap:0}.auth-box,.order-box{padding:20px}.auth-box{border-right:1px solid var(--line)}.command-center h3{margin:4px 0 8px;font-size:22px}.command-center p{color:var(--muted);line-height:1.5}.field{display:grid;gap:6px;margin-top:10px}.field label{font-size:10px;color:var(--muted);letter-spacing:.1em}.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:#030914;color:#fff;padding:12px;outline:none}.field input:focus,.field textarea:focus{border-color:#1397ff88;box-shadow:0 0 0 3px #1397ff12}.cmd-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.cmd-btn{border:1px solid var(--line);border-radius:11px;background:#0b1525;color:#fff;padding:10px 13px;cursor:pointer;font-weight:750}.cmd-btn.primary{border-color:#d6ae5577;background:linear-gradient(145deg,#d6ae5528,#8b67251e);color:#f8dc9b}.cmd-btn:disabled{opacity:.4;cursor:not-allowed}.cmd-status{min-height:20px;margin:10px 0 0!important;font-size:11px}.cmd-status.ok{color:var(--green)}.cmd-status.err{color:var(--danger)}.session-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid var(--line);border-radius:999px;font-size:10px;color:var(--muted)}.session-badge.on{color:var(--green);border-color:#54e3a344}.result-card{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#030914;display:none}.result-card.show{display:block}.result-card strong{color:var(--gold)}
 @keyframes idle{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-5px)}}@keyframes work{0%,100%{transform:translateX(-50%) translate(0,0)}30%{transform:translateX(-50%) translate(9px,-4px)}65%{transform:translateX(-50%) translate(-7px,-5px)}}@keyframes pulse{50%{opacity:.3}}
-@media(max-width:850px){.hero,.office-head{flex-direction:column;align-items:flex-start}.counter{width:100%;min-width:0}.campus{min-height:760px}.b1{left:2%}.b2{right:2%}.b3{left:2%}.b4{right:2%}.b5{top:38%}.core{top:59%}.stats{width:100%}.stat{flex:1}.inspect{grid-template-columns:auto 1fr}.activity{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);padding:14px 0 0}.room{width:140px}}
+@media(max-width:850px){.command-grid{grid-template-columns:1fr}.auth-box{border-right:0;border-bottom:1px solid var(--line)}.hero,.office-head{flex-direction:column;align-items:flex-start}.counter{width:100%;min-width:0}.campus{min-height:760px}.b1{left:2%}.b2{right:2%}.b3{left:2%}.b4{right:2%}.b5{top:38%}.core{top:59%}.stats{width:100%}.stat{flex:1}.inspect{grid-template-columns:auto 1fr}.activity{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);padding:14px 0 0}.room{width:140px}}
 @media(max-width:600px){.shell{padding:12px}.top{align-items:flex-start}.live span:last-child{display:none}.campus{min-height:1010px}.building{width:180px}.tower{left:28px}.roof{left:18px}.b1,.b2,.b3,.b4,.b5{left:50%;right:auto;bottom:auto;transform:translateX(-50%)}.b1{top:3%}.b2{top:21%}.b5{top:39%}.b3{top:58%}.b4{top:77%}.b1:hover,.b1.sel,.b2:hover,.b2.sel,.b3:hover,.b3.sel,.b4:hover,.b4.sel,.b5:hover,.b5.sel{transform:translateX(-50%) translateY(-6px) scale(1.02)}.core{display:none}.desks{grid-template-columns:repeat(2,minmax(110px,1fr));padding-inline:10px}.inspect{grid-template-columns:1fr}.counter{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
@@ -27,6 +30,37 @@ button{font:inherit}.shell{max-width:1440px;margin:auto;padding:22px}.top{displa
 <div class="shell">
 <header class="top"><div class="brand"><div class="mark">A</div><div><h1>AUREON AGENTS OS</h1><small>Virtual HQ · Central Visual</small></div></div><div id="live" class="live"><span class="dot"></span><strong id="liveTitle">VERIFICANDO</strong><span id="liveSub">atividade operacional</span></div></header>
 <section class="hero"><div><div class="eyebrow">AUREON VIRTUAL HQ</div><h2>Veja os agentes dentro da operação.</h2><p>Entre nos prédios, abra os escritórios e clique em cada agente. Movimento é representação visual; o status “Trabalhando” só aparece quando uma tarefa ativa puder ser confirmada no sistema.</p></div><div class="counter"><div><strong>5</strong><small>prédios</small></div><div><strong>31</strong><small>agentes</small></div><div><strong id="workingTop">0</strong><small>trabalhando</small></div></div></section>
+
+<section class="command-center" aria-labelledby="command-title">
+  <div class="command-grid">
+    <div class="auth-box">
+      <div class="eyebrow">ACESSO PRIVADO</div>
+      <h3>Raphael → CORE</h3>
+      <p>Entre para transformar uma ordem em projeto e tarefas reais. O cadastro é fechado por allowlist.</p>
+      <span id="sessionBadge" class="session-badge">● DESCONECTADO</span>
+      <div class="field"><label for="authEmail">E-MAIL</label><input id="authEmail" type="email" value="raphaelbueno.captacao@gmail.com" autocomplete="email"></div>
+      <div class="field"><label for="authPassword">SENHA</label><input id="authPassword" type="password" minlength="8" autocomplete="current-password" placeholder="Sua senha"></div>
+      <div class="cmd-actions">
+        <button id="loginBtn" class="cmd-btn primary" type="button">Entrar</button>
+        <button id="signupBtn" class="cmd-btn" type="button">Primeiro acesso</button>
+        <button id="logoutBtn" class="cmd-btn" type="button" disabled>Sair</button>
+      </div>
+      <p id="authStatus" class="cmd-status"></p>
+    </div>
+    <div class="order-box">
+      <div class="eyebrow">AUREON AUTONOMOUS CORE</div>
+      <h3 id="command-title">Dê uma ordem para a empresa.</h3>
+      <p>O CORE cria o projeto, distribui as tarefas aos agentes e mantém A3 protegido. O executor de 1 em 1 hora assume tarefas A1/A2 que tenham ferramenta real disponível.</p>
+      <div class="field"><label for="coreOrder">ORDEM</label><textarea id="coreOrder" rows="5" placeholder="Ex.: Continue evoluindo o AUREON Agents OS. Quero acompanhar cada tarefa, agente, run e evidência em tempo real."></textarea></div>
+      <div class="cmd-actions">
+        <button id="sendOrderBtn" class="cmd-btn primary" type="button" disabled>Enviar ordem ao CORE</button>
+        <button id="executorBtn" class="cmd-btn" type="button" disabled>Verificar Executor</button>
+      </div>
+      <p id="orderStatus" class="cmd-status"></p>
+      <div id="orderResult" class="result-card"></div>
+    </div>
+  </div>
+</section>
 <section id="campus" class="campus"><div class="road rh"></div><div class="road rv"></div><div class="core"><div class="core-inner"><b>A</b><strong>CORE</strong><small>Comando</small></div></div></section>
 <section class="office-head"><div><div class="eyebrow">PRÉDIO SELECIONADO</div><h3 id="buildingName"></h3><p id="buildingPurpose"></p></div><div class="stats"><div class="stat"><b id="countAgents">0</b><small>agentes</small></div><div class="stat"><b id="countWorking">0</b><small>atividade</small></div><div class="stat"><b id="countBlocked">0</b><small>bloqueados</small></div></div></section>
 <section class="office"><div class="wall-logo">AUREON</div><div class="room meeting">MESA DE DECISÃO</div><div class="room lab">ESTAÇÃO OPERACIONAL</div><div id="desks" class="desks"></div></section>
@@ -34,6 +68,59 @@ button{font:inherit}.shell{max-width:1440px;margin:auto;padding:22px}.top{displa
 <div class="note">AUREON Agents OS · Central Visual. A animação não é prova de execução; tarefa e status operacional são exibidos separadamente.</div>
 </div>
 <script>
+
+const SUPABASE_URL="https://mmgpevthfoaprtvvwomg.supabase.co";
+const REST_URL=SUPABASE_URL+"/rest/v1";
+const SUPABASE_KEY="sb_publishable_L5fmxhXjYJ11PPR6zjkLdA_It3WeKX9";
+let session=JSON.parse(sessionStorage.getItem("aureon_session")||"null");
+
+function setCmdStatus(id,text,kind=""){const el=document.getElementById(id);el.textContent=text;el.className="cmd-status "+kind}
+function authHeaders(){return {apikey:SUPABASE_KEY,Authorization:"Bearer "+(session?.access_token||SUPABASE_KEY),"Content-Type":"application/json"}}
+function refreshSessionUI(){
+ const on=Boolean(session?.access_token);
+ const badge=document.getElementById("sessionBadge");badge.textContent=on?"● CONECTADO":"● DESCONECTADO";badge.className="session-badge"+(on?" on":"");
+ document.getElementById("logoutBtn").disabled=!on;document.getElementById("sendOrderBtn").disabled=!on;document.getElementById("executorBtn").disabled=!on;
+ if(on)setCmdStatus("authStatus","Sessão autenticada. O CORE está liberado.","ok");
+}
+async function authRequest(kind){
+ const email=document.getElementById("authEmail").value.trim().toLowerCase(),password=document.getElementById("authPassword").value;
+ if(!email||password.length<8){setCmdStatus("authStatus","Informe e-mail e senha com pelo menos 8 caracteres.","err");return}
+ setCmdStatus("authStatus",kind==="signup"?"Criando acesso privado…":"Entrando…");
+ const url=kind==="signup"?SUPABASE_URL+"/auth/v1/signup":SUPABASE_URL+"/auth/v1/token?grant_type=password";
+ const body=kind==="signup"?{email,password,data:{display_name:"Raphael Bueno"}}:{email,password};
+ const r=await fetch(url,{method:"POST",headers:{apikey:SUPABASE_KEY,"Content-Type":"application/json"},body:JSON.stringify(body)});
+ const data=await r.json().catch(()=>({}));
+ if(!r.ok){setCmdStatus("authStatus",kind==="signup"?"Acesso não criado. Use um e-mail autorizado ou tente outra senha.":"E-mail ou senha inválidos.","err");return}
+ if(data.access_token){session=data;sessionStorage.setItem("aureon_session",JSON.stringify(session));refreshSessionUI();sync();return}
+ setCmdStatus("authStatus","Cadastro recebido. Se a confirmação de e-mail estiver ativa, confirme a mensagem e depois clique em Entrar.","ok");
+}
+async function hashText(value){const bytes=new TextEncoder().encode(value.trim().toLowerCase());const digest=await crypto.subtle.digest("SHA-256",bytes);return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("")}
+function inferFactory(text){const s=text.toLowerCase();if(/post|video|vídeo|conteúdo|instagram|tiktok|reel|campanha/.test(s))return"media";if(/venda|lead|cliente|proposta|crm|comercial|funil/.test(s))return"sales";return"product"}
+async function sendCoreOrder(){
+ const instruction=document.getElementById("coreOrder").value.trim();if(instruction.length<10){setCmdStatus("orderStatus","Escreva uma ordem mais completa.","err");return}
+ setCmdStatus("orderStatus","CORE montando o plano…");
+ const factory=inferFactory(instruction),hash=await hashText(instruction),title=instruction.replace(/\s+/g," ").slice(0,72);
+ const r=await fetch(REST_URL+"/rpc/create_autonomous_project",{method:"POST",headers:authHeaders(),body:JSON.stringify({p_idempotency_key:"hq-"+hash.slice(0,40),p_title:title,p_objective:instruction,p_factory:factory,p_desired_outcome:"Executar com evidências reais e parar em A3."})});
+ const data=await r.json().catch(()=>({}));
+ if(!r.ok){if(r.status===401){session=null;sessionStorage.removeItem("aureon_session");refreshSessionUI()}setCmdStatus("orderStatus","Não foi possível registrar a ordem. Verifique sua sessão.","err");return}
+ setCmdStatus("orderStatus",data.created?"Ordem registrada. Os agentes receberam o plano.":"Essa ordem já existia; o CORE preservou o projeto.","ok");
+ const card=document.getElementById("orderResult");card.className="result-card show";card.innerHTML="<strong>PROJETO REAL</strong><br>ID: "+data.project_id+"<br>Fábrica: "+data.factory+"<br>Tarefas: "+data.task_count+"<br>Próximo passo: executor A1/A2";
+ document.getElementById("coreOrder").value="";sync();
+}
+async function checkExecutor(){
+ setCmdStatus("orderStatus","Verificando Executor…");
+ const r=await fetch(SUPABASE_URL+"/functions/v1/autonomous-executor",{method:"POST",headers:authHeaders(),body:JSON.stringify({action:"status"})});
+ const data=await r.json().catch(()=>({}));
+ if(!r.ok){setCmdStatus("orderStatus","Executor protegido ou sessão inválida.","err");return}
+ const a=data.adapters||{};setCmdStatus("orderStatus","Executor ativo · AI "+(a.ai?"OK":"pendente")+" · GitHub "+(a.github?"OK":"via automação")+" · Vercel "+(a.vercel?"OK":"pendente")+" · A3 bloqueado","ok");
+}
+document.getElementById("loginBtn").onclick=()=>authRequest("login");
+document.getElementById("signupBtn").onclick=()=>authRequest("signup");
+document.getElementById("logoutBtn").onclick=()=>{session=null;sessionStorage.removeItem("aureon_session");refreshSessionUI();setCmdStatus("authStatus","Sessão encerrada.");};
+document.getElementById("sendOrderBtn").onclick=sendCoreOrder;
+document.getElementById("executorBtn").onclick=checkExecutor;
+refreshSessionUI();
+
 const buildings=[
 {id:"central-governance",name:"Central e Governança",purpose:"Direção, prioridades, coordenação e controle.",color:"#d6ae55"},
 {id:"product-technology",name:"Produto e Tecnologia",purpose:"Transformar necessidades em aplicativos seguros, testados e publicáveis.",color:"#1397ff"},
@@ -60,7 +147,7 @@ function renderOffice(){
 }
 function render(){renderCampus();renderOffice()}
 async function sync(){
- const url="https://mmgpevthfoaprtvvwomg.supabase.co/rest/v1";const key="sb_publishable_L5fmxhXjYJ11PPR6zjkLdA_It3WeKX9";const h={apikey:key,Authorization:"Bearer "+key};
+ const url=REST_URL;const h=authHeaders();
  try{const r=await fetch(url+"/tasks?select=assigned_agent_id,status,title,project_id,updated_at&status=not.in.(completed,cancelled)&order=updated_at.desc",{headers:h});if(!r.ok)throw 0;const tasks=await r.json();const ids=[...new Set(tasks.map(t=>t.project_id).filter(Boolean))];let pm={};if(ids.length){const pr=await fetch(url+"/projects?select=id,title&id=in.("+ids.join(",")+")",{headers:h});if(pr.ok)(await pr.json()).forEach(p=>pm[p.id]=p.title)}
  tasks.forEach(t=>{if(activity[t.assigned_agent_id])return;activity[t.assigned_agent_id]={status:t.status==="blocked"?"blocked":["working","review","approval"].includes(t.status)?"working":"available",title:t.title,project:pm[t.project_id]||null}});
  document.getElementById("live").classList.add("ok");document.getElementById("liveTitle").textContent="AO VIVO";document.getElementById("liveSub").textContent=tasks.length?"tarefas sincronizadas":"conectado · sem tarefas visíveis";render();
